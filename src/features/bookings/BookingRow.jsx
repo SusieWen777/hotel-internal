@@ -40,8 +40,8 @@ function BookingRow({
     created_at,
     startDate,
     endDate,
-    numNights,
-    numGuests,
+    num_Nights,
+    num_Guests,
     totalPrice,
     status,
     guests: { fullName: guestName, email },
@@ -68,7 +68,7 @@ function BookingRow({
           {isToday(new Date(startDate))
             ? "Today"
             : formatDistanceFromNow(startDate)}{" "}
-          &rarr; {numNights} night stay
+          &rarr; {num_Nights} night stay
         </span>
         <span>
           {format(new Date(startDate), "MMM dd yyyy")} &mdash;{" "}
