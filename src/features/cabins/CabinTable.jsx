@@ -9,8 +9,12 @@ function CabinTable() {
   // Custom Hook based on React query
   const { isLoading, cabins } = useCabins();
 
-  // To get data from URL to see the discount type
+  // To get data from URL to see the discount type and sort method
   const [searchParams] = useSearchParams();
+
+  if (isLoading) return <Spinner />;
+
+  // Filter function
   // use "all" for default, to avoid null value in the beginning
   const filterValue = searchParams.get("discount") || "all";
 
@@ -21,7 +25,13 @@ function CabinTable() {
   if (filterValue === "with-discount")
     filteredCabins = cabins.filter((cabin) => cabin.discount > 0);
 
-  if (isLoading) return <Spinner />;
+  //Sort function
+  const sortBy = searchParams.get("sortBy") || "name-asc";
+  const [field, direction] = sortBy.split("-");
+  const modifier = direction === "asc" ? 1 : -1;
+  const sortedCabins = filteredCabins.sort(
+    (a, b) => (a[field] - b[field]) * modifier
+  );
 
   return (
     <Menus>
@@ -37,7 +47,7 @@ function CabinTable() {
 
         <Table.Body
           // data={cabins}
-          data={filteredCabins}
+          data={sortedCabins}
           render={(cabin) => <CabinRow key={cabin.id} cabin={cabin} />}
         />
       </Table>
