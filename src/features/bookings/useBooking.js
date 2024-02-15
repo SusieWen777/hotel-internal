@@ -11,7 +11,7 @@ export function useBooking() {
     data: booking,
     error,
   } = useQuery({
-    queryKey: ["booking"],
+    queryKey: ["booking", bookingId],
     queryFn: () => getBooking(bookingId),
     // by default, React query will fetch data three times. But in this case, could find data means doesn't exist and no need to fetch again
     retry: false,
