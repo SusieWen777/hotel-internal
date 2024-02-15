@@ -12,6 +12,7 @@ import ButtonText from "../../ui/ButtonText";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBooking } from "./useBooking";
 import Spinner from "../../ui/Spinner";
+import { useCheckout } from "../check-in-out/useCheckout";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -25,6 +26,9 @@ function BookingDetail() {
   const moveBack = useMoveBack();
 
   const navigate = useNavigate();
+
+  // Custom hook for checking out a booking
+  const { checkout, isCheckingOut } = useCheckout();
 
   if (isLoading) return <Spinner />;
 
@@ -51,6 +55,12 @@ function BookingDetail() {
       <ButtonGroup>
         {status === "unconfirmed" && (
           <Button onClick={() => navigate(`/checkin/${id}`)}>Check in</Button>
+        )}
+
+        {status === "checked-in" && (
+          <Button onClick={() => checkout(id)} disabled={isCheckingOut}>
+            Check out
+          </Button>
         )}
 
         <Button variation="secondary" onClick={moveBack}>
