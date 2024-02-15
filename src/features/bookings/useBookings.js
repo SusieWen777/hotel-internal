@@ -6,7 +6,7 @@ export function useBookings() {
   // Get value from the URL
   const [searchParams] = useSearchParams();
 
-  //Filter
+  //FILTER
   const filterValue = searchParams.get("status");
   // the parameter method means the way to filter data, "eq", "gte" or "lte"
   const filter =
@@ -19,15 +19,18 @@ export function useBookings() {
   const [field, direction] = sortByRow.split("-");
   const sortBy = { field, direction };
 
+  //Pagination
+  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+
   //The second and third parameters in the queryKey acts as a dependency array, which means when the value changes, the query should refetch the data
   const {
     isLoading,
-    data: bookings,
+    data: { data: bookings, count } = {},
     error,
   } = useQuery({
-    queryKey: ["bookings", filter, sortBy],
-    queryFn: () => getBookings({ filter, sortBy }),
+    queryKey: ["bookings", filter, sortBy, page],
+    queryFn: () => getBookings({ filter, sortBy, page }),
   });
 
-  return { isLoading, error, bookings };
+  return { isLoading, error, bookings, count };
 }
