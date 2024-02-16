@@ -11,9 +11,9 @@ export function useLogin() {
 
   const { mutate: login, isLoading } = useMutation({
     mutationFn: ({ email, password }) => loginApi({ email, password }),
-    onSuccess: (user) => {
+    onSuccess: (data) => {
       // Immediately after logging in, there is no need to getCurrentUser from supabase. Instead, the react query should use the data from cache. Therefore, after successfully logging in, we can put the user data in the cache manually. Then, when the useUser hook is called, the data needed is already in the cache, and the React Query will not fetch data from supabase again.
-      queryClient.setQueriesData(["user"], user);
+      queryClient.setQueryData(["user"], data.user);
       navigate("/dashboard", { replace: true });
     },
     // the err here will be the error thrown by the mutation function
