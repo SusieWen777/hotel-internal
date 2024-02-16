@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "react-hot-toast";
 
 import GlobalStyles from "./styles/GlobalStyles";
 import Dashboard from "./pages/Dashboard";
@@ -14,7 +15,7 @@ import Account from "./pages/Account";
 import Login from "./pages/Login";
 import PageNoteFound from "./pages/PageNotFound";
 import AppLayout from "./ui/AppLayout";
-import { Toaster } from "react-hot-toast";
+import ProtectedRoute from "./ui/ProtectedRoute";
 
 // Set up React Query
 const queryClient = new QueryClient({
@@ -33,7 +34,14 @@ function App() {
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
-          <Route element={<AppLayout />}>
+          {/*Protected Routing just for authorized users. In this case, all the routes are not only the children of AppLayout but also of ProtectedRoute. And we just need to return the children in the ProtectedRoute when the user is authorized */}
+          <Route
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<Navigate replace to="dashboard" />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="bookings" element={<Bookings />} />
@@ -44,6 +52,7 @@ function App() {
             <Route path="settings" element={<Settings />} />
             <Route path="account" element={<Account />} />
           </Route>
+
           <Route path="login" element={<Login />} />
           <Route path="*" element={<PageNoteFound />} />
         </Routes>
