@@ -43,8 +43,6 @@ function TodayActivity() {
   // Custom hook to get today activity data from supabase using React Query
   const { todayActivity, isLoading } = useTodayActivity();
 
-  console.log(todayActivity);
-
   return (
     <StyledToday>
       <Row type="horizontal">

@@ -19,7 +19,6 @@ function DashboardLayout() {
   // Custom hook to get recent booking data from supabase by React query
   const { bookings, isLoading: isLoadingBooking } = useRecentBookings();
   const {
-    stays,
     confirmedStays,
     isLoading: isLoadingStays,
     numDays,
