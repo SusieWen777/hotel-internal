@@ -17,7 +17,7 @@ export function useLogin() {
       navigate("/dashboard", { replace: true });
     },
     // the err here will be the error thrown by the mutation function
-    onError: (err) => {
+    onError: () => {
       toast.error("Provided email or password are incorrect");
     },
   });

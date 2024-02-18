@@ -52,7 +52,7 @@ const Discount = styled.div`
 function CabinRow({ cabin }) {
   // Custom hooks based on React query
   const { isDeleting, deleteCabin } = useDeleteCabin();
-  const { isCreating, createCabin } = useCreateCabin();
+  const { createCabin } = useCreateCabin();
 
   const {
     id: cabinId,
