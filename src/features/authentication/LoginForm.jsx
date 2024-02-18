@@ -8,8 +8,8 @@ import { useLogin } from "./useLogin";
 import SpinnerMini from "../../ui/SpinnerMini";
 
 function LoginForm() {
-  const [email, setEmail] = useState("susie@example.com");
-  const [password, setPassword] = useState("pass0987");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // the custom hook based on React Query to authenticate user
   const { login, isLoading } = useLogin();
